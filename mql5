@@ -1,0 +1,67 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                                  US Sniper EA    |
+//|                                       Developed by Forex Robot Easy Team |
+//|                                                Visit forexroboteasy.com |
+//+------------------------------------------------------------------+
+
+// Define necessary input parameters
+input double StopLoss = 100.0;    // Measurable stop loss value in pips
+input double TakeProfit = 200.0;  // Measurable take profit value in pips
+
+// Define necessary variables
+int ticket = -1;                  // Order ticket number
+
+//+------------------------------------------------------------------+
+//|                                                  Expert initialization function    |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set necessary parameters for the expert advisor
+    SetOrderStopLoss(StopLoss);       // Set stop loss for the order
+    SetOrderTakeProfit(TakeProfit);   // Set take profit for the order
+  
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//|                                                  Expert tick function    |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Check if there are no open positions
+    if (PositionSelect(Symbol()) == false)
+    {
+        // Calculate risk assessment using AI system
+        double risk = CalculateRisk();
+
+        // Check if the calculated risk is within the maximum limit
+        if (risk <= GetMaxRiskLimit())
+        {
+            // Open a single-entry position
+            ticket = OrderSend(Symbol(), OP_BUY, 1, Ask, 10, Bid - StopLoss * Point, Bid + TakeProfit * Point, 'US Sniper', 0, 0, Green);
+        }
+    }
+}
+
+//+------------------------------------------------------------------+
+//|                                                  Calculate risk function    |
+//+------------------------------------------------------------------+
+double CalculateRisk()
+{
+    // Implement AI system to accurately measure risk
+    double risk = 0.5;  // Example value for risk assessment, replace with actual AI calculation
+
+    return risk;
+}
+
+//+------------------------------------------------------------------+
+//|                                                  Get maximum risk limit function    |
+//+------------------------------------------------------------------+
+double GetMaxRiskLimit()
+{
+    // Set the maximum limit for risk
+    double maxRisk = 1.0;  // Example value for maximum risk limit, replace with actual limit
+
+    return maxRisk;
+}
